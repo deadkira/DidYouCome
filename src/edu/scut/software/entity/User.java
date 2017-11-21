@@ -25,6 +25,7 @@ public class User {
 	private Date createdTime;
 	private String username;
 	private String password;
+	private Integer classOfStudent;
 	private int identity;
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date lastLoginTime;
@@ -94,7 +95,7 @@ public class User {
 		this.lastLoginTime = lastLoginTime;
 	}
 
-	public boolean isValid() {
+	public boolean getValid() {
 		return valid;
 	}
 
@@ -102,15 +103,30 @@ public class User {
 		this.valid = valid;
 	}
 
-	public User(String name, Date createdTime, String username, String password, int identity, Date lastLoginTime,
-			boolean valid) {
+	public User(String name, Date createdTime, String username, String password, Integer classOfStudent, int identity,
+			Date lastLoginTime, boolean valid) {
 		super();
 		this.name = name;
 		this.createdTime = createdTime;
 		this.username = username;
 		this.password = password;
+		this.classOfStudent = classOfStudent;
 		this.identity = identity;
 		this.lastLoginTime = lastLoginTime;
 		this.valid = valid;
 	}
+
+	public Integer getClassOfStudent() {
+		return classOfStudent;
+	}
+
+	public void setClassOfStudent(Integer classOfStudent) {
+		this.classOfStudent = classOfStudent;
+	}
+
+	public User() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	
 }

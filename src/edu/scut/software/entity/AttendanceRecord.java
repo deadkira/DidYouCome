@@ -59,7 +59,7 @@ public class AttendanceRecord {
 		this.attendingTime = attendingTime;
 	}
 
-	public boolean isValid() {
+	public boolean getValid() {
 		return valid;
 	}
 
@@ -73,5 +73,9 @@ public class AttendanceRecord {
 		this.studentId = studentId;
 		this.attendingTime = attendingTime;
 		this.valid = valid;
+	}
+
+	public AttendanceRecord() {
+		super();
 	}
 }

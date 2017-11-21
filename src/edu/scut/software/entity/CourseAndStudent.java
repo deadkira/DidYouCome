@@ -42,7 +42,7 @@ public class CourseAndStudent {
 		this.studentId = studentId;
 	}
 
-	public boolean isValid() {
+	public boolean getValid() {
 		return valid;
 	}
 
@@ -55,6 +55,11 @@ public class CourseAndStudent {
 		this.courseId = courseId;
 		this.studentId = studentId;
 		this.valid = valid;
+	}
+
+	public CourseAndStudent() {
+		super();
+		// TODO Auto-generated constructor stub
 	}
 
 }
