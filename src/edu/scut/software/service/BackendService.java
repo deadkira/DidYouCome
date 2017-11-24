@@ -1,7 +1,5 @@
 package edu.scut.software.service;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.forwardedUrl;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -27,6 +25,7 @@ import edu.scut.software.entity.User;
 import edu.scut.software.repository.AttendanceRecord_Repository;
 import edu.scut.software.repository.ClassOfStudent_Repository;
 import edu.scut.software.repository.CourseAndStudent_Repository;
+import edu.scut.software.repository.CourseMessage_Repository;
 import edu.scut.software.repository.Course_Repository;
 import edu.scut.software.repository.User_Repository;
 import edu.scut.software.tool.Helper;
@@ -43,6 +42,8 @@ public class BackendService {
 	CourseAndStudent_Repository courseAndStudent_Repository;
 	@Autowired
 	User_Repository user_Repository;
+	@Autowired
+	CourseMessage_Repository courseMessage_Repository;
 
 	@Transactional(readOnly = true)
 	public User getUser(String username, String password) {
@@ -79,35 +80,8 @@ public class BackendService {
 	}
 
 	public CourseMessage[] getCourseMessage(Integer id) {
-		Course course = getCourse(id);
-		Integer numberOfCourse = course.getNumber();
-		Calendar startCalendar = Calendar.getInstance();
-		startCalendar.setTime(course.getStartDate());
-		Calendar endCalendar = Calendar.getInstance();
-		endCalendar.setTime(course.getEndDate());
-		endCalendar.add(Calendar.DAY_OF_WEEK, 1);
-		CourseMessage[] courseMessages = new CourseMessage[numberOfCourse];
-		for (int i = 0; i < numberOfCourse && startCalendar.compareTo(endCalendar) < 0; i++) {
-			courseMessages[i] = new CourseMessage();
-			courseMessages[i].setId(course.getId());
-			Integer whatDay = startCalendar.get(Calendar.DAY_OF_WEEK) - 1;
-			while (!whatDay.equals(course.getWhatDay())) {
-				startCalendar.add(Calendar.DAY_OF_WEEK, 1);
-			}
-			courseMessages[i].setCourseDate(startCalendar.getTime());
-			courseMessages[i].setCourseStartTime(course.getStartTime());
-			courseMessages[i].setCourseEndTime(course.getEndTime());
-			Date current = new Date();
-			Date startTime = Helper.combineDateWithTime(startCalendar.getTime(), course.getStartTime());
-			Date endTime = Helper.combineDateWithTime(startCalendar.getTime(), course.getEndTime());
-			if (current.compareTo(startTime) < 0)
-				courseMessages[i].setState(CourseMessage.NOTDOYET);
-			else if (current.compareTo(endTime) < 0)
-				courseMessages[i].setState(CourseMessage.DOING);
-			else
-				courseMessages[i].setState(CourseMessage.DONE);
-		}
-		return courseMessages;
+		List<CourseMessage> CourseMessageList = courseMessage_Repository.getByCourseId(id);
+		return CourseMessageList.toArray(new CourseMessage[CourseMessageList.size()]);
 	}
 
 	public AttendanceState[] getAttendanceState(Integer courseId, Date courseDate) {
@@ -165,5 +139,42 @@ public class BackendService {
 
 	public ClassOfStudent getClassOfStudent(Integer id) {
 		return classOfStudent_Repository.findOne(id);
+	}
+
+	public void createCourse(String name, Integer teacherId, String venue, Integer year, Integer term, Date startDate,
+			Date endDate, Date startTime, Date endTime, Integer whatDay) {
+		Course course=new Course(name, teacherId, venue, year, term, 0, startDate, endDate, startTime, endTime, whatDay, true);
+		Integer numberOfCourse = 0;
+		Calendar startCalendar = Calendar.getInstance();
+		startCalendar.setTime(course.getStartDate());
+		Calendar endCalendar = Calendar.getInstance();
+		endCalendar.setTime(course.getEndDate());
+		endCalendar.add(Calendar.DAY_OF_WEEK, 1);
+		List<CourseMessage> courseMessages = new ArrayList<>();
+		for (int i = 0; i < numberOfCourse && startCalendar.compareTo(endCalendar) < 0; i++) {
+			CourseMessage courseMessage = new CourseMessage();
+			courseMessage.setCourseId(course.getId());
+			Integer whatDay1 = startCalendar.get(Calendar.DAY_OF_WEEK) - 1;
+			while (!whatDay1.equals(course.getWhatDay())) {
+				startCalendar.add(Calendar.DAY_OF_WEEK, 1);
+			}
+			courseMessage.setCourseDate(startCalendar.getTime());
+			courseMessage.setCourseStartTime(course.getStartTime());
+			courseMessage.setCourseEndTime(course.getEndTime());
+			Date current = new Date();
+			Date startTime1 = Helper.combineDateWithTime(startCalendar.getTime(), course.getStartTime());
+			Date endTime1 = Helper.combineDateWithTime(startCalendar.getTime(), course.getEndTime());
+			if (current.compareTo(startTime1) < 0)
+				courseMessage.setState(CourseMessage.NOTDOYET);
+			else if (current.compareTo(endTime1) < 0)
+				courseMessage.setState(CourseMessage.DOING);
+			else
+				courseMessage.setState(CourseMessage.DONE);
+			courseMessage.setValidate(true);
+			courseMessages.add(courseMessage);
+		}
+		numberOfCourse=courseMessages.size();
+		course_Repository.save(course);
+		courseMessage_Repository.save(courseMessages);
 	}
 }

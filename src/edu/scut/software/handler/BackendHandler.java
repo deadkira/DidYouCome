@@ -54,16 +54,30 @@ public class BackendHandler {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/getCourseMessage", method = RequestMethod.GET)
+	@RequestMapping(value = "/getCourseMessage", method = RequestMethod.POST)
 	public Object getCourseMessage(HttpServletRequest request) {
 		return backendService.getCourseMessage(Integer.parseInt(request.getParameter("id")));
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/getAttendanceState", method = RequestMethod.GET)
+	@RequestMapping(value = "/getAttendanceState", method = RequestMethod.POST)
 	public Object getAttendanceState(HttpServletRequest request) {
 		Integer courseId = Integer.parseInt(request.getParameter("id"));
 		Date CourseDate = Helper.pareseString("yyyy-MM-dd", request.getParameter("date"));
 		return backendService.getAttendanceState(courseId, CourseDate);
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/addCourse", method = RequestMethod.POST)
+	public Object addCourse(@RequestParam(value = "name") String name,
+			@RequestParam(value = "teacherId") Integer teacherId, @RequestParam(value = "venue") String venue,
+			@RequestParam(value = "year") Integer year, @RequestParam(value = "term") Integer term,
+			@RequestParam(value = "startDate") Date startDate, @RequestParam(value = "endDate") Date endDate,
+			@RequestParam(value = "startTime") Date startTime, @RequestParam(value = "endTime") Date endTime,
+			@RequestParam(value = "whatDay") Integer whatDay) {
+		if(startDate.compareTo(endDate)>=0||startTime.compareTo(endTime)>=0)
+			return false;
+		backendService.createCourse(name,teacherId,venue,year,term,startDate,endDate,startTime,endTime,whatDay);
+		return true;
 	}
 }
