@@ -60,6 +60,7 @@ public class AttendanceService {
 		teacher_Repository.saveAndFlush(teacher);
 	}
 
+	@Transactional
 	public Course[] getCoursesByCondition(Integer year, Integer term, String name, Teacher teacher) {
 		Specification<Course> specification = new Specification<Course>() {
 			public Predicate toPredicate(Root<Course> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
@@ -80,15 +81,18 @@ public class AttendanceService {
 		return result.toArray(new Course[result.size()]);
 	}
 
+	@Transactional
 	public Course getCourse(Integer id) {
 		return course_Repository.getById(id);
 	}
 
+	@Transactional
 	public List<Lesson> getLessons(Integer courseId) {
 		return lesson_Repository.getByCourseId(courseId);
 
 	}
 
+	@Transactional
 	public List<AttendanceState> getAttendanceStates(Integer courseId, Integer lessonId) {
 		List<Student> students = getStudents(courseId);
 		List<AttendanceState> attendanceStates = new ArrayList<>();
@@ -108,6 +112,7 @@ public class AttendanceService {
 		return attendanceStates;
 	}
 
+	@Transactional
 	public List<Student> getStudents(Integer courseId) {
 		List<CourseAndStudent> cas = courseAndStudent_Repository.getByCourseId(courseId);
 		int[] studentIds = new int[cas.size()];
@@ -127,6 +132,7 @@ public class AttendanceService {
 		return result;
 	}
 
+	@Transactional
 	public void createCourse(String name, Integer teacherId, String venue, Integer year, Integer term, Date startDate,
 			Date endDate, Date startTime, Date endTime, Integer whatDay) {
 		Course course = new Course(name, teacherId, venue, year, term, 0, startDate, endDate, startTime, endTime,
@@ -166,73 +172,90 @@ public class AttendanceService {
 		lesson_Repository.save(lessons);
 	}
 
+	@Transactional
 	public void saveLesson(Lesson lesson) {
 		lesson_Repository.saveAndFlush(lesson);
 	}
 
+	@Transactional
 	public Teacher getTeacher(String token) {
 		return teacher_Repository.getByToken(token);
 	}
 
+	@Transactional
 	public List<Course> getCourses(String teacherId) {
 		return course_Repository.getByTeacherId(teacherId);
 	}
 
+	@Transactional
 	public Lesson getLesson(Integer id) {
 		return lesson_Repository.getById(id);
 	}
 
+	@Transactional
 	public AttendanceRecord getAttendanceRecord(Integer lessonId, Integer studentId) {
 		return attendanceRecord_Repository.getByLessonIdAndStudentId(lessonId, studentId);
 	}
 
+	@Transactional
 	public void saveAttendanceRecord(AttendanceRecord attendanceRecord) {
 		attendanceRecord_Repository.save(attendanceRecord);
 	}
 
+	@Transactional
 	public void removeAttendanceRecord(AttendanceRecord attendanceRecord) {
 		attendanceRecord_Repository.delete(attendanceRecord);
 	}
 
+	@Transactional
 	public List<Lesson> getLessonsNotDoYet(Date courseDate, Date courseStartTime) {
 		return lesson_Repository.getByCourseDateAndCourseStartTimeAndState(courseDate, courseStartTime,
 				Lesson.NOTDOYET);
 	}
 
+	@Transactional
 	public void saveLessons(List<Lesson> lessons) {
 		lesson_Repository.save(lessons);
 	}
 
+	@Transactional
 	public List<Lesson> getLessonsDoing(Date courseDate, Date courseEndTime) {
 		return lesson_Repository.getByCourseDateAndCourseEndTimeAndState(courseDate, courseEndTime, Lesson.DOING);
 	}
 
+	@Transactional
 	public Student getStudent(String username, String password) {
 		return student_Repository.getByUsernameAndPassword(username, password);
 	}
 
+	@Transactional
 	public void saveStudent(Student student) {
 		student_Repository.save(student);
 	}
 
+	@Transactional
 	public Student getStudent(String token) {
 		return student_Repository.getByToken(token);
 	}
 
+	@Transactional
 	public Lesson getcurrentlesson(Integer studentId) {
-		return lesson_Repository.getLessonDoing(studentId);
+		return lesson_Repository.getLesson(studentId,Lesson.DOING);
 	}
 
+	@Transactional
 	public Integer getAttendingTimes(Integer studentId, Integer courseId) {
 		return attendanceRecord_Repository.getAttendingTimes(studentId, courseId);
 	}
 
+	@Transactional
 	public Teacher getTeacher(Integer id) {
 		return teacher_Repository.findOne(id);
 	}
 
+	@Transactional
 	public void attend(Integer studentId, Integer lessonId) {
-		
+
 		attendanceRecord_Repository.save(new AttendanceRecord(lessonId, studentId, new Date(), true));
 	}
 }

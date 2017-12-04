@@ -1,6 +1,5 @@
 package edu.scut.software.handler;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -17,9 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.theme.ThemeChangeInterceptor;
-
-import com.mysql.fabric.xmlrpc.base.Array;
 
 import edu.scut.software.entity.AttendanceRecord;
 import edu.scut.software.entity.Course;

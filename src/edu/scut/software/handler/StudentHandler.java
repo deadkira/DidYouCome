@@ -63,7 +63,7 @@ public class StudentHandler {
 		byte[] bytes = new byte[fi.available()];
 		fi.read(bytes);
 		String avatarStr = new String(Base64.encodeBase64(bytes));
-		Map map = Helper.toMap("data", student);
+		Map<String, Object> map = Helper.toMap("data", student);
 		map.put("icon", avatarStr);
 		return map;
 	}
@@ -101,7 +101,7 @@ public class StudentHandler {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/attend", method = RequestMethod.POST)
+	@RequestMapping(value = "/studentLogout", method = RequestMethod.POST)
 	public Object studentLogout(HttpServletRequest request) {
 		String token = request.getHeader("Authorization");
 		Student student = attendanceService.getStudent(token);

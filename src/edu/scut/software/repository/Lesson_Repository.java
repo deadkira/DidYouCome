@@ -20,6 +20,6 @@ public interface Lesson_Repository extends JpaRepository<Lesson, Integer>, JpaSp
 
 	List<Lesson> getByCourseDateAndCourseEndTimeAndState(Date courseDate, Date courseEndTime, String state);
 
-	@Query(value = "select l from Lesson l,CourseAndStudent c where l.courseId=c.courseId and c.studentId=?1 and l.state=Lesson.DOING")
-	Lesson getLessonDoing(Integer studentId);
+	@Query(value = "select l from Lesson l,CourseAndStudent c where l.courseId=c.courseId and c.studentId=?1 and l.state=?2")
+	Lesson getLesson(Integer studentId,String state);
 }
