@@ -7,4 +7,6 @@ import edu.scut.software.entity.ClassOfStudent;
 
 public interface ClassOfStudent_Repository extends JpaRepository<ClassOfStudent, Integer> {
 
+	ClassOfStudent getById(Integer classOfStudent);
+
 }

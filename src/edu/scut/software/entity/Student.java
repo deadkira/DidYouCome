@@ -14,26 +14,20 @@ import javax.persistence.TemporalType;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Cacheable
-@Table(name = "User")
+@Table(name = "Student")
 @Entity
-public class User {
+public class Student {
 	private Integer id;
 	private String name;
-	// private String avatarPath;
-	// private Integer privilege;
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date createdTime;
 	private String username;
 	private String password;
 	private Integer classOfStudent;
-	private int identity;
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date lastLoginTime;
+	private String token;
 	private boolean valid;
-
-	public static final int ADMIN = 0;
-	public static final int STUDENT = 1;
-	public static final int TEACHER = 2;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -78,14 +72,6 @@ public class User {
 		this.password = password;
 	}
 
-	public int getIdentity() {
-		return identity;
-	}
-
-	public void setIdentity(int identity) {
-		this.identity = identity;
-	}
-
 	@Temporal(TemporalType.TIMESTAMP)
 	public Date getLastLoginTime() {
 		return lastLoginTime;
@@ -103,19 +89,6 @@ public class User {
 		this.valid = valid;
 	}
 
-	public User(String name, Date createdTime, String username, String password, Integer classOfStudent, int identity,
-			Date lastLoginTime, boolean valid) {
-		super();
-		this.name = name;
-		this.createdTime = createdTime;
-		this.username = username;
-		this.password = password;
-		this.classOfStudent = classOfStudent;
-		this.identity = identity;
-		this.lastLoginTime = lastLoginTime;
-		this.valid = valid;
-	}
-
 	public Integer getClassOfStudent() {
 		return classOfStudent;
 	}
@@ -124,9 +97,28 @@ public class User {
 		this.classOfStudent = classOfStudent;
 	}
 
-	public User() {
-		super();
-		// TODO Auto-generated constructor stub
+	public String getToken() {
+		return token;
 	}
-	
+
+	public void setToken(String token) {
+		this.token = token;
+	}
+
+	public Student(String name, Date createdTime, String username, String password, Integer classOfStudent,
+			Date lastLoginTime, String token, boolean valid) {
+		super();
+		this.name = name;
+		this.createdTime = createdTime;
+		this.username = username;
+		this.password = password;
+		this.classOfStudent = classOfStudent;
+		this.lastLoginTime = lastLoginTime;
+		this.token = token;
+		this.valid = valid;
+	}
+
+	public Student() {
+		super();
+	}
 }

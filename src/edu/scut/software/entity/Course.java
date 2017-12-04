@@ -38,6 +38,7 @@ public class Course {
 	@DateTimeFormat(pattern = "HH:mm:ss")
 	private Date endTime;
 	private Integer whatDay;
+	private String status;
 	private boolean valid;
 
 	public static final Date FIRST_LESSON_BEGIN_TIME = Helper.pareseString("HH:mm", "8:50");
@@ -70,6 +71,10 @@ public class Course {
 	public static final Integer THURSDAY = 4;
 	public static final Integer FRIDAY = 5;
 	public static final Integer SATURDAY = 6;
+	
+	public static final String NOTBEGINNING="未开始";
+	public static final String NOTENDING="未结束";
+	public static final String ENDED="已经结束";
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -181,8 +186,16 @@ public class Course {
 		this.valid = valid;
 	}
 
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
 	public Course(String name, Integer teacherId, String venue, Integer year, Integer term, Integer number,
-			Date startDate, Date endDate, Date startTime, Date endTime, Integer whatDay, boolean valid) {
+			Date startDate, Date endDate, Date startTime, Date endTime, Integer whatDay, String status, boolean valid) {
 		super();
 		this.name = name;
 		this.teacherId = teacherId;
@@ -195,6 +208,7 @@ public class Course {
 		this.startTime = startTime;
 		this.endTime = endTime;
 		this.whatDay = whatDay;
+		this.status = status;
 		this.valid = valid;
 	}
 

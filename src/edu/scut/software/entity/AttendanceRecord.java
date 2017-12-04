@@ -18,7 +18,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Entity
 public class AttendanceRecord {
 	private Integer id;
-	private Integer courseId;
+	private Integer lessonId;
 	private Integer studentId;
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date attendingTime;
@@ -34,12 +34,12 @@ public class AttendanceRecord {
 		this.id = id;
 	}
 
-	public Integer getCourseId() {
-		return courseId;
+	public Integer getLessonId() {
+		return lessonId;
 	}
 
-	public void setCourseId(Integer courseId) {
-		this.courseId = courseId;
+	public void setLessonId(Integer lessonId) {
+		this.lessonId = lessonId;
 	}
 
 	public Integer getStudentId() {
@@ -67,9 +67,9 @@ public class AttendanceRecord {
 		this.valid = valid;
 	}
 
-	public AttendanceRecord(Integer courseId, Integer studentId, Date attendingTime, boolean valid) {
+	public AttendanceRecord(Integer lessonId, Integer studentId, Date attendingTime, boolean valid) {
 		super();
-		this.courseId = courseId;
+		this.lessonId = lessonId;
 		this.studentId = studentId;
 		this.attendingTime = attendingTime;
 		this.valid = valid;

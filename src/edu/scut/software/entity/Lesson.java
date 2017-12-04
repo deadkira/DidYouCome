@@ -2,17 +2,24 @@ package edu.scut.software.entity;
 
 import java.util.Date;
 
+import javax.persistence.Cacheable;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-public class CourseMessage {
+@Cacheable
+@Table(name = "Lesson")
+@Entity
+public class Lesson {
 	private Integer id;
 	private Integer courseId;
+	private Integer sequence;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date courseDate;
 	@DateTimeFormat(pattern = "HH:mm:ss")
@@ -42,6 +49,14 @@ public class CourseMessage {
 
 	public void setCourseId(Integer courseId) {
 		this.courseId = courseId;
+	}
+
+	public Integer getSequence() {
+		return sequence;
+	}
+
+	public void setSequence(Integer sequence) {
+		this.sequence = sequence;
 	}
 
 	@Temporal(TemporalType.DATE)
@@ -79,7 +94,7 @@ public class CourseMessage {
 		this.state = state;
 	}
 
-	public boolean isValidate() {
+	public boolean getValidate() {
 		return validate;
 	}
 
@@ -87,10 +102,13 @@ public class CourseMessage {
 		this.validate = validate;
 	}
 
-	public CourseMessage(Integer courseId, Date courseDate, Date courseStartTime, Date courseEndTime, String state,
-			boolean validate) {
+	
+
+	public Lesson(Integer courseId, Integer sequence, Date courseDate, Date courseStartTime, Date courseEndTime,
+			String state, boolean validate) {
 		super();
 		this.courseId = courseId;
+		this.sequence = sequence;
 		this.courseDate = courseDate;
 		this.courseStartTime = courseStartTime;
 		this.courseEndTime = courseEndTime;
@@ -98,7 +116,7 @@ public class CourseMessage {
 		this.validate = validate;
 	}
 
-	public CourseMessage() {
+	public Lesson() {
 		super();
 	}
 }
