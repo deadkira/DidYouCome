@@ -121,7 +121,7 @@ public class TeacherHandler {
 		Teacher teacher = attendanceService.getTeacher(token);
 		if (teacher == null)
 			return false;
-		return Helper.toMap("data", attendanceService.getCourses(teacher.getUsername()));
+		return Helper.toMap("data", attendanceService.getCourses(teacher.getId()));
 	}
 
 	@ResponseBody

@@ -11,6 +11,6 @@ public interface Course_Repository extends JpaRepository<Course, Integer>, JpaSp
 
 	Course getById(Integer id);
 
-	List<Course> getByTeacherId(String teacherId);
+	List<Course> getByTeacherId(Integer teacherId);
 
 }

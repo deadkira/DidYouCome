@@ -183,7 +183,7 @@ public class AttendanceService {
 	}
 
 	@Transactional
-	public List<Course> getCourses(String teacherId) {
+	public List<Course> getCourses(Integer teacherId) {
 		return course_Repository.getByTeacherId(teacherId);
 	}
 
