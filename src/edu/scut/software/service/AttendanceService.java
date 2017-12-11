@@ -193,7 +193,7 @@ public class AttendanceService {
 	}
 
 	@Transactional
-	public AttendanceRecord getAttendanceRecord(Integer lessonId, Integer studentId) {
+	public AttendanceRecord getAttendanceRecord(Integer studentId, Integer lessonId) {
 		return attendanceRecord_Repository.getByLessonIdAndStudentId(lessonId, studentId);
 	}
 
