@@ -72,9 +72,9 @@ public class Course {
 	public static final Integer FRIDAY = 5;
 	public static final Integer SATURDAY = 6;
 	
-	public static final String NOTBEGINNING="Î´¿ªÊ¼";
-	public static final String NOTENDING="Î´½áÊø";
-	public static final String ENDED="ÒÑ¾­½áÊø";
+	public static final String NOTBEGINNING="æœªå¼€å§‹";
+	public static final String NOTENDING="æœªç»“æŸ";
+	public static final String ENDED="å·²ç»ç»“æŸ";
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

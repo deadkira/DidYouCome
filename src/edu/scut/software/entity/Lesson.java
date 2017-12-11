@@ -29,9 +29,9 @@ public class Lesson {
 	private String state;
 	private boolean validate;
 
-	public static final String DONE = "ÒÑ½áÊø";
-	public static final String DOING = "ÕıÔÚÉÏ¿Î";
-	public static final String NOTDOYET = "»¹Î´¿ªÊ¼";
+	public static final String DONE = "å·²ç»“æŸ";
+	public static final String DOING = "æ­£åœ¨ä¸Šè¯¾";
+	public static final String NOTDOYET = "è¿˜æœªå¼€å§‹";
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

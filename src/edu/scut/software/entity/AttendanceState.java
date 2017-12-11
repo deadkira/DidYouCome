@@ -7,8 +7,8 @@ public class AttendanceState {
 	private String className;
 	private String state;
 	
-	public static final String NOTATTENDED = "Î´Ç©µ½";
-	public static final String ATTENDED = "ÒÑÇ©µ½";
+	public static final String NOTATTENDED = "æœªç­¾åˆ°";
+	public static final String ATTENDED = "å·²ç­¾åˆ°";
 	public Integer getId() {
 		return id;
 	}
