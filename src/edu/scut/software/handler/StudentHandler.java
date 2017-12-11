@@ -40,8 +40,9 @@ public class StudentHandler {
 			@RequestParam(value = "password", required = false) String password, HttpServletRequest request,
 			HttpServletResponse response) throws IOException {
 		Student student;
+		
 		if (username != null && password != null) {
-			student = attendanceService.getStudent(username, password);
+			student = attendanceService.getStudent(username.trim(), password);
 			if (student == null) {
 				return false;
 			} else {

@@ -52,7 +52,7 @@ public class AttendanceService {
 
 	@Transactional(readOnly = true)
 	public Teacher getTeacher(String username, String password) {
-		return teacher_Repository.getByUsernameAndPassword(username.trim().toLowerCase(), password);
+		return teacher_Repository.getByUsernameIgnoreCaseAndPassword(username.trim().toLowerCase(), password);
 	}
 
 	@Transactional
@@ -225,7 +225,7 @@ public class AttendanceService {
 
 	@Transactional
 	public Student getStudent(String username, String password) {
-		return student_Repository.getByUsernameAndPassword(username, password);
+		return student_Repository.getByUsernameIgnoreCaseAndPassword(username, password);
 	}
 
 	@Transactional

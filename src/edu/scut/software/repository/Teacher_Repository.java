@@ -8,7 +8,7 @@ import edu.scut.software.entity.Teacher;
 
 public interface Teacher_Repository extends JpaRepository<Teacher, Integer>, JpaSpecificationExecutor<Teacher> {
 
-	Teacher getByUsernameAndPassword(String username, String password);
+	Teacher getByUsernameIgnoreCaseAndPassword(String username, String password);
 
 	Teacher getByToken(String token);
 

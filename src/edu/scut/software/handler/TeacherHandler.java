@@ -81,7 +81,7 @@ public class TeacherHandler {
 			HttpServletResponse response) {
 		Teacher teacher;
 		if (username != null && password != null) {
-			teacher = attendanceService.getTeacher(username, password);
+			teacher = attendanceService.getTeacher(username.trim(), password);
 			if (teacher == null) {
 				return false;
 			} else {
