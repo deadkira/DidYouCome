@@ -147,6 +147,8 @@ public class TeacherHandler {
 		if (teacher == null)
 			return false;
 		Lesson lesson = attendanceService.getLesson(lesson_id);
+		if (lesson == null)
+			return false;
 		return Helper.toMap("data", attendanceService.getAttendanceStates(lesson.getCourseId(), lesson_id));
 	}
 
@@ -193,7 +195,7 @@ public class TeacherHandler {
 	@ResponseBody
 	@RequestMapping(value = "/addCourse", method = RequestMethod.POST)
 	public Object addCourse(@RequestParam(value = "name") String name,
-			@RequestParam(value = "teacherId") Integer teacherId, @RequestParam(value = "venue") String venue,
+			@RequestParam(value = "teacherId") Integer teacherId, @RequestParam(value = "venueId") Integer venueId,
 			@RequestParam(value = "year") Integer year, @RequestParam(value = "term") Integer term,
 			@RequestParam(value = "startDate") Date startDate, @RequestParam(value = "endDate") Date endDate,
 			@RequestParam(value = "startTime") Integer startTimeIndex,
@@ -204,7 +206,7 @@ public class TeacherHandler {
 			return false;
 		if (!(whatDay >= 0 && whatDay <= 6))
 			return false;
-		attendanceService.createCourse(name, teacherId, venue, year, term, startDate, endDate, startTime, endTime,
+		attendanceService.createCourse(name, teacherId, venueId, year, term, startDate, endDate, startTime, endTime,
 				whatDay);
 		return true;
 	}

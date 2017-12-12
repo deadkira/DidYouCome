@@ -26,6 +26,7 @@ import edu.scut.software.entity.CurrentLesson;
 import edu.scut.software.entity.Lesson;
 import edu.scut.software.entity.Student;
 import edu.scut.software.entity.Teacher;
+import edu.scut.software.entity.Venue;
 import edu.scut.software.service.AttendanceService;
 import edu.scut.software.tool.Helper;
 
@@ -81,12 +82,14 @@ public class StudentHandler {
 			return false;
 		Course course = attendanceService.getCourse(lesson.getCourseId());
 		Teacher teacher = attendanceService.getTeacher(course.getTeacherId());
+		Venue venue=attendanceService.getVenue(lesson.getVenueId());
 		Integer attendingTimes = attendanceService.getAttendingTimes(student.getId(), lesson.getCourseId());
 		AttendanceRecord attendanceRecord = attendanceService.getAttendanceRecord(student.getId(), lesson.getId());
 		Boolean isAttended = attendanceRecord != null ? true : false;
+		
 		return new CurrentLesson(lesson.getId(), lesson.getCourseId(), course.getName(), teacher.getName(),
 				lesson.getCourseStartTime(), lesson.getCourseEndTime(), lesson.getSequence(), course.getNumber(),
-				course.getVenue(), attendingTimes, isAttended);
+				venue, attendingTimes, isAttended);
 	}
 
 	@ResponseBody

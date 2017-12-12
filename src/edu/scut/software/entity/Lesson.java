@@ -26,6 +26,7 @@ public class Lesson {
 	private Date courseStartTime;
 	@DateTimeFormat(pattern = "HH:mm:ss")
 	private Date courseEndTime;
+	private Integer venueId;
 	private String state;
 	private boolean validate;
 
@@ -94,6 +95,14 @@ public class Lesson {
 		this.state = state;
 	}
 
+	public Integer getVenueId() {
+		return venueId;
+	}
+
+	public void setVenueId(Integer venueId) {
+		this.venueId = venueId;
+	}
+
 	public boolean getValidate() {
 		return validate;
 	}
@@ -102,20 +111,18 @@ public class Lesson {
 		this.validate = validate;
 	}
 
-	
-
 	public Lesson(Integer courseId, Integer sequence, Date courseDate, Date courseStartTime, Date courseEndTime,
-			String state, boolean validate) {
+			Integer venueId, String state, boolean validate) {
 		super();
 		this.courseId = courseId;
 		this.sequence = sequence;
 		this.courseDate = courseDate;
 		this.courseStartTime = courseStartTime;
 		this.courseEndTime = courseEndTime;
+		this.venueId = venueId;
 		this.state = state;
 		this.validate = validate;
 	}
-
 	public Lesson() {
 		super();
 	}

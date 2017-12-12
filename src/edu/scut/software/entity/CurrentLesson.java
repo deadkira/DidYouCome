@@ -11,7 +11,7 @@ public class CurrentLesson {
 	public Date endTime;
 	public Integer curTimes;
 	public Integer totalTimes;
-	public String venue;
+	public Venue venue;
 	public Integer totalAttendence;
 	public Boolean isAttended;
 
@@ -79,11 +79,12 @@ public class CurrentLesson {
 		this.totalTimes = totalTimes;
 	}
 
-	public String getVenue() {
+
+	public Venue getVenue() {
 		return venue;
 	}
 
-	public void setVenue(String venue) {
+	public void setVenue(Venue venue) {
 		this.venue = venue;
 	}
 
@@ -104,7 +105,7 @@ public class CurrentLesson {
 	}
 
 	public CurrentLesson(Integer id, Integer courseId, String courseName, String teacherName, Date startTime,
-			Date endTime, Integer curTimes, Integer totalTimes, String venue, Integer totalAttendence,
+			Date endTime, Integer curTimes, Integer totalTimes, Venue venue, Integer totalAttendence,
 			Boolean isAttended) {
 		super();
 		this.id = id;

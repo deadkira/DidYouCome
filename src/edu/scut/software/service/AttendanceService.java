@@ -24,6 +24,7 @@ import edu.scut.software.entity.CourseAndStudent;
 import edu.scut.software.entity.Lesson;
 import edu.scut.software.entity.Student;
 import edu.scut.software.entity.Teacher;
+import edu.scut.software.entity.Venue;
 import edu.scut.software.repository.AttendanceRecord_Repository;
 import edu.scut.software.repository.ClassOfStudent_Repository;
 import edu.scut.software.repository.CourseAndStudent_Repository;
@@ -31,6 +32,7 @@ import edu.scut.software.repository.Course_Repository;
 import edu.scut.software.repository.Lesson_Repository;
 import edu.scut.software.repository.Student_Repository;
 import edu.scut.software.repository.Teacher_Repository;
+import edu.scut.software.repository.Venue_Repository;
 import edu.scut.software.tool.Helper;
 
 @Service
@@ -49,6 +51,8 @@ public class AttendanceService {
 	Teacher_Repository teacher_Repository;
 	@Autowired
 	Lesson_Repository lesson_Repository;
+	@Autowired
+	Venue_Repository venue_Repository;
 
 	@Transactional(readOnly = true)
 	public Teacher getTeacher(String username, String password) {
@@ -133,9 +137,9 @@ public class AttendanceService {
 	}
 
 	@Transactional
-	public void createCourse(String name, Integer teacherId, String venue, Integer year, Integer term, Date startDate,
+	public void createCourse(String name, Integer teacherId, Integer venueId, Integer year, Integer term, Date startDate,
 			Date endDate, Date startTime, Date endTime, Integer whatDay) {
-		Course course = new Course(name, teacherId, venue, year, term, 0, startDate, endDate, startTime, endTime,
+		Course course = new Course(name, teacherId,  year, term, 0, startDate, endDate, startTime, endTime,
 				whatDay, Course.NOTBEGINNING, true);
 		Integer numberOfCourse = 0;
 		Calendar startCalendar = Calendar.getInstance();
@@ -155,6 +159,7 @@ public class AttendanceService {
 			lesson.setCourseDate(startCalendar.getTime());
 			lesson.setCourseStartTime(course.getStartTime());
 			lesson.setCourseEndTime(course.getEndTime());
+			lesson.setVenueId(venueId);
 			Date current = new Date();
 			Date startTime1 = Helper.combineDateWithTime(startCalendar.getTime(), course.getStartTime());
 			Date endTime1 = Helper.combineDateWithTime(startCalendar.getTime(), course.getEndTime());
@@ -240,7 +245,7 @@ public class AttendanceService {
 
 	@Transactional
 	public Lesson getcurrentlesson(Integer studentId) {
-		return lesson_Repository.getLesson(studentId,Lesson.DOING);
+		return lesson_Repository.getLesson(studentId, Lesson.DOING);
 	}
 
 	@Transactional
@@ -257,5 +262,10 @@ public class AttendanceService {
 	public void attend(Integer studentId, Integer lessonId) {
 
 		attendanceRecord_Repository.save(new AttendanceRecord(lessonId, studentId, new Date(), true));
+	}
+
+	@Transactional
+	public Venue getVenue(Integer venueId) {
+		return venue_Repository.findOne(venueId);
 	}
 }

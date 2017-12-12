@@ -25,7 +25,7 @@ public class Course {
 	private Integer id;
 	private String name;
 	private Integer teacherId;
-	private String venue;
+
 	private Integer year;
 	private Integer term;
 	private Integer number;
@@ -71,10 +71,10 @@ public class Course {
 	public static final Integer THURSDAY = 4;
 	public static final Integer FRIDAY = 5;
 	public static final Integer SATURDAY = 6;
-	
-	public static final String NOTBEGINNING="未开始";
-	public static final String NOTENDING="未结束";
-	public static final String ENDED="已经结束";
+
+	public static final String NOTBEGINNING = "未开始";
+	public static final String NOTENDING = "未结束";
+	public static final String ENDED = "已经结束";
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -100,14 +100,6 @@ public class Course {
 
 	public void setTeacherId(Integer teacherId) {
 		this.teacherId = teacherId;
-	}
-
-	public String getVenue() {
-		return venue;
-	}
-
-	public void setVenue(String venue) {
-		this.venue = venue;
 	}
 
 	public Integer getYear() {
@@ -194,12 +186,12 @@ public class Course {
 		this.status = status;
 	}
 
-	public Course(String name, Integer teacherId, String venue, Integer year, Integer term, Integer number,
-			Date startDate, Date endDate, Date startTime, Date endTime, Integer whatDay, String status, boolean valid) {
+	public Course(String name, Integer teacherId, Integer year, Integer term, Integer number, Date startDate,
+			Date endDate, Date startTime, Date endTime, Integer whatDay, String status, boolean valid) {
 		super();
 		this.name = name;
 		this.teacherId = teacherId;
-		this.venue = venue;
+
 		this.year = year;
 		this.term = term;
 		this.number = number;
