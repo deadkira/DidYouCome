@@ -106,10 +106,10 @@ public class AttendanceService {
 			ClassOfStudent classOfStudent = classOfStudent_Repository.getById(student.getClassOfStudent());
 			record = attendanceRecord_Repository.getByLessonIdAndStudentId(lessonId, student.getId());
 			if (record != null) {
-				attendanceStates.add(new AttendanceState(lessonId, student.getUsername(), student.getName(),
+				attendanceStates.add(new AttendanceState(student.getId(), student.getUsername(), student.getName(),
 						classOfStudent.getName(), AttendanceState.ATTENDED));
 			} else {
-				attendanceStates.add(new AttendanceState(-1, student.getUsername(), student.getName(),
+				attendanceStates.add(new AttendanceState(student.getId(), student.getUsername(), student.getName(),
 						classOfStudent.getName(), AttendanceState.NOTATTENDED));
 			}
 		}
