@@ -25,7 +25,7 @@ public class Course {
 	private Integer id;
 	private String name;
 	private Integer teacherId;
-
+	private Integer venueId;
 	private Integer year;
 	private Integer term;
 	private Integer number;
@@ -100,6 +100,14 @@ public class Course {
 
 	public void setTeacherId(Integer teacherId) {
 		this.teacherId = teacherId;
+	}
+
+	public Integer getVenueId() {
+		return venueId;
+	}
+
+	public void setVenueId(Integer venueId) {
+		this.venueId = venueId;
 	}
 
 	public Integer getYear() {
@@ -186,12 +194,12 @@ public class Course {
 		this.status = status;
 	}
 
-	public Course(String name, Integer teacherId, Integer year, Integer term, Integer number, Date startDate,
-			Date endDate, Date startTime, Date endTime, Integer whatDay, String status, boolean valid) {
+	public Course(String name, Integer teacherId, Integer venueId, Integer year, Integer term, Integer number,
+			Date startDate, Date endDate, Date startTime, Date endTime, Integer whatDay, String status, boolean valid) {
 		super();
 		this.name = name;
 		this.teacherId = teacherId;
-
+		this.venueId = venueId;
 		this.year = year;
 		this.term = term;
 		this.number = number;
@@ -206,7 +214,5 @@ public class Course {
 
 	public Course() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
-
 }

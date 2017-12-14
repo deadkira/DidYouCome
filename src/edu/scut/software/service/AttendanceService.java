@@ -137,9 +137,9 @@ public class AttendanceService {
 	}
 
 	@Transactional
-	public void createCourse(String name, Integer teacherId, Integer venueId, Integer year, Integer term, Date startDate,
-			Date endDate, Date startTime, Date endTime, Integer whatDay) {
-		Course course = new Course(name, teacherId,  year, term, 0, startDate, endDate, startTime, endTime,
+	public void createCourse(String name, Integer teacherId, Integer venueId, Integer year, Integer term,
+			Date startDate, Date endDate, Date startTime, Date endTime, Integer whatDay) {
+		Course course = new Course(name, teacherId, venueId, year, term, 0, startDate, endDate, startTime, endTime,
 				whatDay, Course.NOTBEGINNING, true);
 		Integer numberOfCourse = 0;
 		Calendar startCalendar = Calendar.getInstance();
