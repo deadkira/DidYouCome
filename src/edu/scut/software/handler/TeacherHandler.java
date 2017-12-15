@@ -38,41 +38,44 @@ public class TeacherHandler {
 			Course.NINTH_LESSON_END_TIME, Course.TENTH_LESSON_BEGIN_TIME, Course.TENTH_LESSON_END_TIME,
 			Course.ELEVENTH_LESSON_BEGIN_TIME, Course.ELEVENTH_LESSON_END_TIME };
 
-	//@PostConstruct
+	@PostConstruct
 	public void init() {
 		for (int i = 0; i < lessonTimePoints.length; i++) {
-			final int j = i;
-			Date lessonTime = lessonTimePoints[j];
-			TimerTask task = new TimerTask() {
-				public void run() {
-					Calendar c = Calendar.getInstance();
-					c.set(Calendar.MILLISECOND, 0);
-					c.set(Calendar.SECOND, 0);
-					c.set(Calendar.MINUTE, 0);
-					c.set(Calendar.HOUR_OF_DAY, 0);
-					Date currentDate = c.getTime();
-					Date currentTime = lessonTime;
-					List<Lesson> lessons = null;
-					if (j % 2 == 0) {
-						lessons = attendanceService.getLessonsNotDoYet(currentDate, currentTime);
-						for (int k = 0; k < lessons.size(); k++) {
-							lessons.get(k).setState(Lesson.DOING);
-						}
-					} else {
-						lessons = attendanceService.getLessonsDoing(currentDate, currentTime);
-						for (int k = 0; k < lessons.size(); k++) {
-							lessons.get(k).setState(Lesson.DONE);
-						}
-					}
-					if (lessons != null && lessons.size() > 0)
-						attendanceService.saveLessons(lessons);
-				}
-			};
-			Date taskStartDate = Calendar.getInstance().getTime();
-			Date taskStartTime = lessonTime;
-			new Timer().scheduleAtFixedRate(task, Helper.combineDateWithTime(taskStartDate, taskStartTime),
-					24 * 60 * 60 * 1000);
+			createTimerTask(i);
 		}
+	}
+
+	public void createTimerTask(int i) {
+		Date lessonTime = lessonTimePoints[i];
+		TimerTask task = new TimerTask() {
+			public void run() {
+				Calendar c = Calendar.getInstance();
+				c.set(Calendar.MILLISECOND, 0);
+				c.set(Calendar.SECOND, 0);
+				c.set(Calendar.MINUTE, 0);
+				c.set(Calendar.HOUR_OF_DAY, 0);
+				Date currentDate = c.getTime();
+				Date currentTime = lessonTime;
+				List<Lesson> lessons = null;
+				if (i % 2 == 0) {
+					lessons = attendanceService.getLessonsNotDoYet(currentDate, currentTime);
+					for (int k = 0; k < lessons.size(); k++) {
+						lessons.get(k).setState(Lesson.DOING);
+					}
+				} else {
+					lessons = attendanceService.getLessonsDoing(currentDate, currentTime);
+					for (int k = 0; k < lessons.size(); k++) {
+						lessons.get(k).setState(Lesson.DONE);
+					}
+				}
+				if (lessons != null && lessons.size() > 0)
+					attendanceService.saveLessons(lessons);
+			}
+		};
+		Date taskStartDate = Calendar.getInstance().getTime();
+		Date taskStartTime = lessonTime;
+		new Timer().scheduleAtFixedRate(task, Helper.combineDateWithTime(taskStartDate, taskStartTime),
+				24 * 60 * 60 * 1000);
 	}
 
 	@ResponseBody
@@ -192,7 +195,6 @@ public class TeacherHandler {
 		}
 		return true;
 	}
-
 
 	@RequestMapping(value = "/addCourse", method = RequestMethod.POST)
 	public Object addCourse(@RequestParam(value = "name") String name,
