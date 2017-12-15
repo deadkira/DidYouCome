@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -28,7 +29,7 @@ import edu.scut.software.tool.Helper;
 public class TeacherHandler {
 	@Autowired
 	private AttendanceService attendanceService;
-	private Date[] lessonTimePoints = { Course.FIFTH_LESSON_BEGIN_TIME, Course.FIFTH_LESSON_END_TIME,
+	private Date[] lessonTimePoints = { Course.FIRST_LESSON_BEGIN_TIME, Course.FIRST_LESSON_END_TIME,
 			Course.SECOND_LESSON_BEGIN_TIME, Course.SECOND_LESSON_END_TIME, Course.THIRD_LESSON_BEGIN_TIME,
 			Course.THIRD_LESSON_END_TIME, Course.FOURTH_LESSON_BEGIN_TIME, Course.FOURTH_LESSON_END_TIME,
 			Course.FIFTH_LESSON_BEGIN_TIME, Course.FIFTH_LESSON_END_TIME, Course.SISTH_LESSON_BEGIN_TIME,
@@ -37,7 +38,7 @@ public class TeacherHandler {
 			Course.NINTH_LESSON_END_TIME, Course.TENTH_LESSON_BEGIN_TIME, Course.TENTH_LESSON_END_TIME,
 			Course.ELEVENTH_LESSON_BEGIN_TIME, Course.ELEVENTH_LESSON_END_TIME };
 
-	@PostConstruct
+	//@PostConstruct
 	public void init() {
 		for (int i = 0; i < lessonTimePoints.length; i++) {
 			final int j = i;
@@ -192,22 +193,25 @@ public class TeacherHandler {
 		return true;
 	}
 
-	@ResponseBody
+
 	@RequestMapping(value = "/addCourse", method = RequestMethod.POST)
 	public Object addCourse(@RequestParam(value = "name") String name,
 			@RequestParam(value = "teacherId") Integer teacherId, @RequestParam(value = "venueId") Integer venueId,
 			@RequestParam(value = "year") Integer year, @RequestParam(value = "term") Integer term,
-			@RequestParam(value = "startDate") Date startDate, @RequestParam(value = "endDate") Date endDate,
+			@RequestParam(value = "startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
+			@RequestParam(value = "endDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate,
 			@RequestParam(value = "startTime") Integer startTimeIndex,
 			@RequestParam(value = "endTime") Integer endTimeIndex, @RequestParam(value = "whatDay") Integer whatDay) {
+
 		Date startTime = lessonTimePoints[startTimeIndex * 2];
 		Date endTime = lessonTimePoints[endTimeIndex * 2 + 1];
 		if (startDate.compareTo(endDate) >= 0 || startTime.compareTo(endTime) >= 0)
-			return false;
+			return "fail";
 		if (!(whatDay >= 0 && whatDay <= 6))
-			return false;
+			return "fail";
 		attendanceService.createCourse(name, teacherId, venueId, year, term, startDate, endDate, startTime, endTime,
 				whatDay);
-		return true;
+		return "success";
+
 	}
 }

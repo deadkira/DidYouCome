@@ -7,6 +7,19 @@
 <title>Insert title here</title>
 </head>
 <body>
-	来了吗？
+	添加课程：
+	<form action="${pageContext.request.contextPath }/addCourse" method="post">
+		name:<input type="text" name="name"><br>
+		teacherId:<input type="text" name="teacherId"><br>
+		venueId:<input type="text" name="venueId"><br>
+		year:<input type="text" name="year"><br>
+		term:<input type="text" name="term"><br>
+		startDate:<input type="text" name="startDate"><br>
+		endDate:<input type="text" name="endDate"><br>
+		startTime:<input type="text" name="startTime"><br>
+		endTime:<input type="text" name="endTime"><br>
+		whatDay:<input type="text" name="whatDay"><br>
+		<button>添加</button>
+	</form>
 </body>
 </html>

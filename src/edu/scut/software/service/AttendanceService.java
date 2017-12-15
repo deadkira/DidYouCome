@@ -141,21 +141,28 @@ public class AttendanceService {
 			Date startDate, Date endDate, Date startTime, Date endTime, Integer whatDay) {
 		Course course = new Course(name, teacherId, venueId, year, term, 0, startDate, endDate, startTime, endTime,
 				whatDay, Course.NOTBEGINNING, true);
-		Integer numberOfCourse = 0;
+		Date now=new Date();
+		if(startDate.compareTo(now)>0) {
+			course.setStatus(Course.NOTBEGINNING);
+		}else if(endDate.compareTo(now)>0) {
+			course.setStatus(Course.NOTENDING);
+		}else {
+			course.setStatus(Course.ENDED);
+		}
 		Calendar startCalendar = Calendar.getInstance();
 		startCalendar.setTime(course.getStartDate());
 		Calendar endCalendar = Calendar.getInstance();
 		endCalendar.setTime(course.getEndDate());
 		endCalendar.add(Calendar.DAY_OF_WEEK, 1);
 		List<Lesson> lessons = new ArrayList<>();
-		for (int i = 0; i < numberOfCourse && startCalendar.compareTo(endCalendar) < 0; i++) {
+		Integer whatDay1 = startCalendar.get(Calendar.DAY_OF_WEEK) - 1;
+		while (!whatDay1.equals(course.getWhatDay())) {
+			startCalendar.add(Calendar.DAY_OF_WEEK, 1);
+			whatDay1=(whatDay1+1)%7;
+		}
+		for (int i = 0;startCalendar.compareTo(endCalendar) < 0; i++) {
 			Lesson lesson = new Lesson();
-			lesson.setCourseId(course.getId());
 			lesson.setSequence(i + 1);
-			Integer whatDay1 = startCalendar.get(Calendar.DAY_OF_WEEK) - 1;
-			while (!whatDay1.equals(course.getWhatDay())) {
-				startCalendar.add(Calendar.DAY_OF_WEEK, 1);
-			}
 			lesson.setCourseDate(startCalendar.getTime());
 			lesson.setCourseStartTime(course.getStartTime());
 			lesson.setCourseEndTime(course.getEndTime());
@@ -171,9 +178,13 @@ public class AttendanceService {
 				lesson.setState(Lesson.DONE);
 			lesson.setValidate(true);
 			lessons.add(lesson);
+			startCalendar.add(Calendar.DAY_OF_WEEK, 7);
 		}
-		numberOfCourse = lessons.size();
+		course.setNumber(lessons.size());
 		course_Repository.save(course);
+		for(Lesson l : lessons) {
+			l.setCourseId(course.getId());
+		}
 		lesson_Repository.save(lessons);
 	}
 
